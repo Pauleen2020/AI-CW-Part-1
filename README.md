@@ -1,0 +1,3 @@
+For Notes we are using MIRO
+
+https://miro.com/welcomeonboard/NXdjQURBR3pYdlBScy9rUU1maHJEaUh3WWJXM1pqUFUwamdKUmRRWXZ3YzZqc2VGa0U4aXBsaG0xOG9nbmFwUmFUaHhWOXV3OUg0cnhObWQ1eUsrSWJzWXZCT1JKWndVUEFRNkVVQkhrYUoya281L0g4S3hZampTenlFQnR3V0R0R2lncW1vRmFBVnlLcVJzTmdFdlNRPT0hdjE=?share_link_id=44775794280
