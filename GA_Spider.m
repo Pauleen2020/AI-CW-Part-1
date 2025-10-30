@@ -14,23 +14,33 @@ population = minAngle + (maxAngle - minAngle) * rand(numOfIndividuals, 24);
 %print population
 population;
 
+%-------------Generations-------------%
 
 % some Loop for the generations go here
 
+    % Fitness function to define the ranking of each individual in population
+    % fitness(population, ...)
+    
+    
+    
+    % seclection of parents to breed
+    % select_parents(population, fitness_outcome?)
+    
+    
+    
+    % Crossover of the parents?
+    % generate_offsprint(parents)
+    
+    
+    
+    % mutation of those parents
+    % mutate_offspring(..)
 
-% Fitness function to define the ranking of each individual in population
-% fitness(population, )
+% end generation loop + some print functions here to show progress?
 
 
-% seclection of parents to breed
 
-
-% Crossover of the parents?
-
-
-% mutation of those parents
-
-
+%-------------Create .mp4 file for fast playback-------------%
 
 % Loop though all the vectors in the final gait and save to a file for faster
 % playback (30fps)
