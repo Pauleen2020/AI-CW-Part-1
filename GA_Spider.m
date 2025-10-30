@@ -28,12 +28,12 @@ population;
     
     
     
-    % Crossover of the parents?
+    % Crossover and generating new children to make up the full population
     % generate_offsprint(parents)
     
     
     
-    % mutation of those parents
+    % mutation of the population
     % mutate_offspring(..)
 
 % end generation for loop + some print functions here to show progress?
