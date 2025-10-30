@@ -16,7 +16,7 @@ population;
 
 %-------------Generations-------------%
 
-% some Loop for the generations go here
+% for Loop for the generations go here
 
     % Fitness function to define the ranking of each individual in population
     % fitness(population, ...)
@@ -36,7 +36,7 @@ population;
     % mutation of those parents
     % mutate_offspring(..)
 
-% end generation loop + some print functions here to show progress?
+% end generation for loop + some print functions here to show progress?
 
 
 
