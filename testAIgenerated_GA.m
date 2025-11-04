@@ -2,7 +2,7 @@
 clear; close all; clc;
 
 %% -------------------- User-tunable GA parameters --------------------
-gaitFrames = 300;         % frames per gait (set lower for quick tests, e.g., 30)
+gaitFrames = 50;         % frames per gait (set lower for quick tests, e.g., 30)
 numGenesPerFrame = 24;
 chromosomeLength = gaitFrames * numGenesPerFrame;
 
@@ -164,8 +164,8 @@ if saveVideo
         writeVideo(vw, frameData);   % Write frame to video
     end
 
-    close(v);  % Finalize video file
-    fprintf('✅ Video saved to %s\n', filename);
+    close(vw);  % Finalize video file
+    fprintf('✅ Video saved to %s\n', videoFilename);
 end
 
 %% -------------------- GA helper functions --------------------
