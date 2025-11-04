@@ -7,7 +7,7 @@ numGenesPerFrame = 24;
 chromosomeLength = gaitFrames * numGenesPerFrame;
 
 popSize = 40;             % population size
-maxGenerations = 200;
+maxGenerations = 2;
 elitismCount = 4;
 tournamentSize = 4;
 crossoverRate = 0.9;
@@ -18,7 +18,7 @@ minAngle = -pi/4;
 maxAngle = pi/4;
 
 saveVideo = true;        % set true to write mp4 of best gait playback
-videoFilename = 'best_spider_gait.mp4';
+videoFilename = 'best_spider_gait';
 videoFPS = 30;
 
 rng('shuffle');
@@ -38,11 +38,11 @@ population = minAngle + (maxAngle - minAngle) * rand(popSize, chromosomeLength);
 bestFitnessHistory = zeros(maxGenerations,1);
 meanFitnessHistory = zeros(maxGenerations,1);
 
-if saveVideo
-    vw = VideoWriter(videoFilename, 'Motion JPEG AVI');
-    vw.FrameRate = videoFPS;
-    open(vw);
-end
+% if saveVideo
+%     vw = VideoWriter(videoFilename, 'Motion JPEG AVI');
+%     vw.FrameRate = videoFPS;
+%     open(vw);
+% end
 
 %% -------------------- Main GA loop --------------------
 for gen = 1:maxGenerations
@@ -72,10 +72,10 @@ for gen = 1:maxGenerations
     end
 
     % Optionally record a frame of visualization for a video (just a snapshot)
-    if saveVideo
-        frame = getframe(gcf);
-        writeVideo(vw, frame);
-    end
+    % if saveVideo
+    %     frame = getframe(gcf);
+    %     writeVideo(vw, frame);
+    % end
 
     % Termination heuristic
     if bestFit > 0.995
@@ -125,9 +125,9 @@ for gen = 1:maxGenerations
 end
 
 % close video if used
-if saveVideo
-    close(vw);
-end
+% if saveVideo
+%     close(vw);
+% end
 
 %% -------------------- Post-run: show fitness history and best gait play --------------------
 genRan = 1:gen;
@@ -147,12 +147,25 @@ end
 bestFinalGait = reshape(population(bestFinalIdx,:), gaitFrames, numGenesPerFrame);
 
 figure(3); clf;
-% Play best gait (show frames at reasonable speed)
-for f = 1:gaitFrames
-    plot_spider_pose(bestFinalGait(f,:));
-    title(sprintf('Best gait frame %d / %d ; fitness = %.4f', f, gaitFrames, finalFitnessVals(bestFinalIdx)));
-    drawnow;
-    pause(1/videoFPS); % simulate playback at videoFPS
+if saveVideo
+    vw = VideoWriter(videoFilename, 'Motion JPEG AVI');
+    vw.FrameRate = videoFPS;
+    open(vw);  % Open video file for writing
+
+    numFrames = size(gait, 1);
+
+    for frame = 1:numFrames
+        angles = gait(frame, :);
+        plot_spider_pose(angles);  % Your existing plot function
+        title(sprintf('Spider Gait - Frame %d of %d', frame, numFrames));
+        drawnow;
+
+        frameData = getframe(gcf);  % Capture current figure
+        writeVideo(vw, frameData);   % Write frame to video
+    end
+
+    close(v);  % Finalize video file
+    fprintf('✅ Video saved to %s\n', filename);
 end
 
 %% -------------------- GA helper functions --------------------
