@@ -2,18 +2,19 @@
 clear; close all; clc;
 
 %% -------------------- User-tunable GA parameters --------------------
-gaitFrames = 50;         % frames per gait (set lower for quick tests, e.g., 30)
+gaitFrames = 300;         % frames per gait (set lower for quick tests, e.g., 30)
 numGenesPerFrame = 24;
 chromosomeLength = gaitFrames * numGenesPerFrame;
 
 popSize = 40;             % population size
-maxGenerations = 2;
+maxGenerations = 200;
 elitismCount = 4;
 tournamentSize = 4;
 crossoverRate = 0.9;
-mutationProb = 0.02;      % per-gene chance
-mutationStd = 0.04;       % gaussian std (radians)
+mutationProb = 0.1;      % per-gene chance % higher mean more probability of mutation
+mutationStd = 0.01;       % gaussian std (radians) % higher means higher delta between two frames of an angle
 
+%for initial population
 minAngle = -pi/4;
 maxAngle = pi/4;
 
