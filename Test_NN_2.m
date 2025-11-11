@@ -1,28 +1,49 @@
-% Generate training data
-training_inputs = rand(1000, 24) / 2;
-targets = training_inputs(:, 1) .* training_inputs(:, 2);
 
-% Create and train the neural network
-nn = Full_NN(24, [48, 48], 24);
-nn = nn.train_nn(training_inputs, targets, 1000, 0.8);
+nn = Full_NN(24, [48, 48], 24); 
+gait = rand(300,24);
+epochs = 1000;       
+lr = 0.8;         
 
-% Test the network
-input = rand(1,24);
-target = input;
+% ================== Training ==================
+for e = 1:epochs
+    S_errors = 0;
+    
+    % Sequential training: row i -> input, row i+1 -> target
+    for i = 1:(size(gait,1)-1)
+        input  = gait(i, :);       % Current row (1x24 vector)
+        target = gait(i+1, :);     % Next row (1x24 vector)
+
+        % Forward pass
+        [nn, output] = nn.FF(input);
+
+        % Calc error
+        e_vec = target - output;
+
+        % Backpropagation + Gradient Descent
+        nn = nn.BP(e_vec);
+        nn = nn.GD(lr);
+
+        % Accumulate error
+        S_errors = S_errors + nn.msqe(target, output);
+    end
+    
+    % Print average error per epoch
+    fprintf('Epoch %d/%d, Mean Squared Error: %.6f\n', e, epochs, S_errors / (size(gait,1)-1));
+end
+
+% ================== Testing ==================
+k = 1;
+input  = gait(k, :);
+target = gait(k+1, :);
+
 [nn, NN_output] = nn.FF(input);
 
-% Display results
-fprintf('\n=============== Testing the Network Screen Output ===============\n');
-fprintf('Test input is [%f, %f]\n', input(1), input(2));
-fprintf('Target output is %f\n', target);
-fprintf('Neural Network actual output is %f, error is %f\n', NN_output, target - NN_output);
-
-fprintf('=================================================================\n');
-disp('Final Weights:');
-fprintf('\n================= Final Weights =================\n');
-for i = 1:length(nn.W)
-    fprintf('Weights between Layer %d and Layer %d:\n', i, i+1);
-    disp(nn.W{i});
-end
-fprintf('=================================================\n');
-
+fprintf('\n=============== Testing the Network ===============\n');
+fprintf('Test input row %d\n', k);
+fprintf('Target output row %d\n', k+1);
+fprintf('Neural Network output (first 5 values):\n');
+disp(NN_output(1:5));
+fprintf('Error (first 5 values):\n');
+result = target - NN_output;
+disp(result(1:5));
+fprintf('===================================================\n');
