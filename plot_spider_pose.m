@@ -78,6 +78,11 @@ function plot_spider_pose(angles)
         label_pos = base_pos + offset * [cos(angle), sin(angle), 0];
         text(label_pos(1), label_pos(2), label_pos(3)+0.05, leg_labels{i}, ...
             'FontSize', 12, 'FontWeight', 'bold');
+
+        fprintf('leg joint 1 position: (%.2f, %.2f, %.2f)\n', j1(1), j1(2), j1(3));
+        fprintf('leg joint 2 position: (%.2f, %.2f, %.2f)\n', j2(1), j2(2), j2(3));
+        fprintf('leg joint 3 position: (%.2f, %.2f, %.2f)\n', j3(1), j3(2), j3(3));
+        fprintf('leg joint 4 position: (%.2f, %.2f, %.2f)\n', j4(1), j4(2), j4(3));
     end
 
     hold off;
