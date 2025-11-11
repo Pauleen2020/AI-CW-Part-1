@@ -28,6 +28,4 @@ function get_coxa_range()
     MAX_ANGLES(3) = MAX_ANGLES(2);
     MAX_ANGLES(6) = MAX_ANGLES(2);
     MAX_ANGLES(7) = MAX_ANGLES(2);
-
-    disp(MAX_ANGLES);
 end
