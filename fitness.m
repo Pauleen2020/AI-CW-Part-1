@@ -1,16 +1,24 @@
-function [outputArg1,outputArg2] = fitness(inputArg1,inputArg2)
-%FITNESS Summary of this function goes here
-%   Detailed explanation goes here
-arguments (Input)
-    inputArg1
-    inputArg2
-end
+function fitness(angles)
+    % All stationary feet need to be on the same plane
+    % All stationary feet needs to be below the head of the spider
+    % Legs cannot interset
+    % Each joint needs a maximum delta
+    % Each segment should have locked range of motion
 
-arguments (Output)
-    outputArg1
-    outputArg2
-end
+    
+    MAX_FOOT_HEIGHT = 0;
 
-outputArg1 = inputArg1;
-outputArg2 = inputArg2;
+    MIN_COXA_ANGLE = 0;
+    MAX_COXA_ANGLE = 0;
+    MAX_COXA_ANGLE_DELTA = 0;
+
+    MIN_FEMUR_ANGLE = 0;
+    MAX_FEMUR_ANGLE = 0;
+    MAX_FEMUR_ANGLE_DELTA = 0;
+
+    MIN_TIBIA_ANGLE = 0;
+    MAX_TIBIA_ANGLE = 0;
+    MAX_TIBIA_ANGLE_DELTA = 0;
+
+
 end
