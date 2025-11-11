@@ -5,6 +5,10 @@ function get_coxa_range()
     coords = get_spider_coords(angles);
 
     for i=1:3
+        leg_pair = 
+    end
+
+    for i=1:3
         MAX_ANGLE = 0;
         LEG_LENGTH = 2.9;
 
