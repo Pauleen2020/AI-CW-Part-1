@@ -17,8 +17,6 @@ function get_coxa_range()
 
         MAX_ANGLE = rad2deg(acos((DISTANCE_BETWEEN_POINTS / 2)/ LEG_LENGTH));
         MAX_ANGLES(i) = 90 - MAX_ANGLE;
-
-        fprintf("Leg %d max coxa angle: %.2f degrees\n", i, rad2deg(MAX_ANGLE));
     end
 
     MAX_ANGLES(4) = MAX_ANGLES(1);
