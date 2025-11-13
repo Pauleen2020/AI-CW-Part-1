@@ -1,4 +1,4 @@
-function fitness(angles, prev_angles)
+function fitness = fitness(angles, prev_angles)
     % All stationary feet need to be on the same plane
     % All stationary feet needs to be below the head of the spider
     % Legs cannot interset
