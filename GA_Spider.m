@@ -52,3 +52,27 @@ spider_gait(population)
 
 
 
+
+function init_ga_spider()
+    POPULATION_SIZE= 0;
+    GENERATIONS = 100;
+
+    TRAINING_FRAMES = 100;
+    GAIT_FRAMES = 300;
+
+
+
+    population = generate_population(POPULATION_NUM);
+
+
+    for i=1:GENERATIONS
+        gaits = generate_gaits(population, TRAINING_FRAMES);
+
+        fitness_values = evaluate_fitness(gaits);
+
+        parents = get_parents(population, fitness_values);
+
+        population = generate_offspring(parents, POPULATION_SIZE);
+    end
+
+end
