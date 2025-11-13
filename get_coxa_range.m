@@ -18,12 +18,7 @@ function get_coxa_range()
         MAX_ANGLE = rad2deg(acos((DISTANCE_BETWEEN_POINTS / 2)/ LEG_LENGTH));
         MAX_ANGLES(i) = 90 - MAX_ANGLE;
     end
-
-    MAX_ANGLES(4) = MAX_ANGLES(1);
-    MAX_ANGLES(5) = MAX_ANGLES(1);
-    MAX_ANGLES(8) = MAX_ANGLES(1);
-
-    MAX_ANGLES(3) = MAX_ANGLES(2);
-    MAX_ANGLES(6) = MAX_ANGLES(2);
-    MAX_ANGLES(7) = MAX_ANGLES(2);
+    
+    MAX_ANGLES([4, 5, 8]) = MAX_ANGLES(1);
+    MAX_ANGLES([3, 6, 7]) = MAX_ANGLES(2);
 end
