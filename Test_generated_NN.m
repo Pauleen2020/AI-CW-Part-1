@@ -1,19 +1,20 @@
-
-nn = Full_NN(24, [48, 48], 24); 
-gait = rand(300,24);
+numOfIndividuals = 300;
+minAngle = -pi/4;
+maxAngle = pi/4;
+nn = Full_NN(24, [48, 48], 24);
+% temporary gait
+gait = minAngle + (maxAngle - minAngle) * rand(numOfIndividuals, 24);
 epochs = 1000;       
-lr = 0.8;         
+lr = 0.01;         
 
 % ================== Training ==================
 for e = 1:epochs
     S_errors = 0;
     
-    % Sequential training: row i -> input, row i+1 -> target
     for i = 1:(size(gait,1)-1)
-        input  = gait(i, :);       % Current row (1x24 vector)
-        target = gait(i+1, :);     % Next row (1x24 vector)
+        input  = gait(i, :);
+        target = gait(i+1, :);
 
-        % Forward pass
         [nn, output] = nn.FF(input);
 
         % Calc error
@@ -47,3 +48,11 @@ fprintf('Error (first 5 values):\n');
 result = target - NN_output;
 disp(result(1:5));
 fprintf('===================================================\n');
+% Generate NN outputs for the whole gait sequence
+NN_results = zeros(size(gait));
+for i = 1:(size(gait,1)-1)
+    [nn, NN_results(i,:)] = nn.FF(gait(i,:));
+end
+
+% Visualize the NN-generated gait
+spider_gait(NN_results);
