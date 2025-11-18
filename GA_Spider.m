@@ -19,7 +19,7 @@ function init_ga_spider()
 
 
 
-    population = generate_population(POPULATION_NUM, SPIDER_INPUT_SIZE, SPIDER_OUTPUT_SIZE);
+    population = generate_population(POPULATION_SIZE, SPIDER_INPUT_SIZE, SPIDER_OUTPUT_SIZE);
 
 
     for i=1:GENERATIONS
