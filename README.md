@@ -28,10 +28,13 @@ these gaits go through a fitness function, of which these will go through a sele
 all of these below will change and manipulte the weights/genes,NOT the gaits
 
 -- explain selet parents here
+we will take the top 16 and generate 4 completely random spiders to make up 20 spiders
 
 --explain breed function here
+we then will breed these 20 to make 100 spiders, breeding will consist of the crossover function among the top 6 parents + two random parents of from the 20 parents.
 
 --explain muttae function here
+the mutate function will pick a random gene and change it within a threshold of 5%, a variable is set to dicate the chances that a mutaion happens
 
 
 problems faced/theorised, if the weights are 0 what wil happen.
@@ -44,3 +47,13 @@ The other way that could learn and solve the spider problem is by taking every p
 This approach may also be more RAM intensive due to the quantity of numbers being processed at one time.
 
 To train the NN, we take an 'ideal' gait, and take the first frame, pass this into the NN, then train based on the differences to the output and the input + 1, we then take the second frame (2:24) and train based on differences between the output and input(3:24)
+
+
+
+
+
+
+
+
+
+
