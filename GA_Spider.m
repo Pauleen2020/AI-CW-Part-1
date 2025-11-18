@@ -64,7 +64,7 @@ function init_ga_spider()
     RANDOM_SPIDERS = 4;
 
     MUTATION_RATE = 0.001;
-    MAX_MUTATION_ANGLE = 0.05;
+    MAX_MUTATION_ANGLE = 1;
 
 
     TRAINING_FRAMES = 100;
