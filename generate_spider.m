@@ -1,12 +1,11 @@
-function spider = generate_spider() 
-    INPUT_SIZE = 24;
-    OUTPUT_SIZE = 24;
+function spider = generate_spider(INPUT_SIZE, OUTPUT_SIZE)
 
     MIN_GENE_VALUE = -1;
     MAX_GENE_VALUE = 1;
     MIN_STEP_VALUE = 0.01;
 
     chromosome = generate_chromosome(INPUT_SIZE, OUTPUT_SIZE, MIN_GENE_VALUE, MAX_GENE_VALUE, MIN_STEP_VALUE);
+    spider = chromosome;
 end
 
 
