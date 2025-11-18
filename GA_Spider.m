@@ -38,16 +38,16 @@ function init_ga_spider()
 
     best_gait = get_best_gait(final_gaits, final_fitness_values);
 
-    save_spider_gait_video(best_gait, 'best_spider_gait.mp4', 30);
+    
+    %-------------Create .mp4 file for fast playback-------------%
+
+    % Loop though all the vectors in the final gait and save to a file for faster
+    % playback (30fps)
+    %save_spider_gait_video(best_gait, 'best_spider_gait.mp4', 30);
+    
+    % can choose whether to render live and see it instead of saving the video
+    % (unsupported in browser)
+    spider_gait(population)
 end
 
 
-%-------------Create .mp4 file for fast playback-------------%
-
-% Loop though all the vectors in the final gait and save to a file for faster
-% playback (30fps)
-% save_spider_gait_video(population, 'spider_gait.mp4', 30);
-
-% can choose whether to render live and see it instead of saving the video
-% (unsupported in browser)
-spider_gait(population)
