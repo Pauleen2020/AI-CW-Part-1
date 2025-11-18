@@ -54,15 +54,25 @@ spider_gait(population)
 
 
 function init_ga_spider()
-    POPULATION_SIZE= 0;
+    POPULATION_SIZE= 100;
+    SPIDER_INPUT_SIZE = 24;
+    SPIDER_OUTPUT_SIZE = 24;
     GENERATIONS = 100;
+
+    NUM_OF_SURVIVORS = 20;
+    TOP_SURVIVORS = 16;
+    RANDOM_SPIDERS = 4;
+
+    MUTATION_RATE = 0.001;
+    MAX_MUTATION_ANGLE = 0.05;
+
 
     TRAINING_FRAMES = 100;
     GAIT_FRAMES = 300;
 
 
 
-    population = generate_population(POPULATION_NUM);
+    population = generate_population(POPULATION_NUM, SPIDER_INPUT_SIZE, SPIDER_OUTPUT_SIZE);
 
 
     for i=1:GENERATIONS
@@ -70,9 +80,9 @@ function init_ga_spider()
 
         fitness_values = evaluate_fitness(gaits);
 
-        parents = get_parents(population, fitness_values);
+        parents = get_parents(population, fitness_values, NUM_OF_SURVIVORS, TOP_SURVIVORS, RANDOM_SPIDERS, INPUT_SIZE, OUTPUT_SIZE);
 
-        population = generate_offspring(parents, POPULATION_SIZE);
+        population = generate_offspring(parents, POPULATION_SIZE, MUTATION_RATE, MAX_MUTATION_ANGLE);
     end
 
 end
