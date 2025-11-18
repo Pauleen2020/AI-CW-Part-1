@@ -85,4 +85,11 @@ function init_ga_spider()
         population = generate_offspring(parents, POPULATION_SIZE, MUTATION_RATE, MAX_MUTATION_ANGLE);
     end
 
+    final_gaits = generate_gaits(population, GAIT_FRAMES);
+
+    final_fitness_values = evaluate_fitness(final_gaits);
+
+    best_gait = get_best_gait(final_gaits, final_fitness_values);
+
+    save_spider_gait_video(best_gait, 'best_spider_gait.mp4', 30);
 end
