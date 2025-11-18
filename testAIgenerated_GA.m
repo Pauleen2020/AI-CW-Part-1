@@ -15,8 +15,8 @@ mutationProb = 0.1;      % per-gene chance % higher mean more probability of mut
 mutationStd = 0.01;       % gaussian std (radians) % higher means higher delta between two frames of an angle
 
 %for initial population
-minAngle = -pi/4;
-maxAngle = pi/4;
+minAngle = -pi/7;
+maxAngle = pi/7;
 
 saveVideo = true;        % set true to write mp4 of best gait playback
 videoFilename = 'best_spider_gait';
@@ -26,11 +26,11 @@ rng('shuffle');
 
 %% -------------------- Build default params for fitness --------------------
 params = default_gait_params();
-params.jointLimits = [pi/3, pi/4, pi/2];
+params.jointLimits = [pi/4, pi/5, pi/4];
 params.bodyZ = 0;
 params.floorZTarget = -1.0;
 % weight tuning (higher means more important)
-params.weights = struct('collision',4,'floorVar',3,'aboveBody',6,'pairing',5,'jointLimits',6,'temporal',4);
+params.weights = struct('collision',6,'floorVar',7,'aboveBody',4,'pairing',5,'jointLimits',7,'temporal',4);
 
 %% -------------------- Initialize population (flattened gaits) --------------------
 population = minAngle + (maxAngle - minAngle) * rand(popSize, chromosomeLength);
@@ -167,6 +167,8 @@ if saveVideo
 
     close(vw);  % Finalize video file
     fprintf('✅ Video saved to %s\n', videoFilename);
+
+    save('bestGait.mat', 'gait')
 end
 
 %% -------------------- GA helper functions --------------------
@@ -193,7 +195,7 @@ function fitness = evaluate_gait_fitness(gaitSeq, params)
         for leg = 1:nLegs
             idx = (leg-1)*3 + (1:3);
             jointAngles = pose(idx);
-            base_pos = [a * cos(baseAngles(leg)), b * sin(baseAngles(leg)), 0];
+            base_pos = [a * cos(baseAngles(leg)), b * sin(baseAngles(leg)), params.bodyZ];
             try
                 [~, ~, ~, j4] = forward_leg_kinematics2(base_pos, baseAngles(leg), jointAngles, segs);
                 if any(isnan(j4)) || any(isinf(j4))
@@ -437,7 +439,7 @@ function [j1, j2, j3, j4] = forward_leg_kinematics2(base_pos, base_angle, joint_
 
     j1 = base_pos;
 
-    coxa_elevation = deg2rad(30);
+    coxa_elevation = -deg2rad(30);
     coxa_horiz_dir = [cos(base_angle + theta1), sin(base_angle + theta1), 0];
     rot_axis = cross(coxa_horiz_dir, [0 0 1]);
     if norm(rot_axis) < 1e-8

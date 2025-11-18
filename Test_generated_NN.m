@@ -7,8 +7,8 @@ nn = Full_NN(24, [48, 48], 24);
 %gait = 2 * (population- min(population(:))) / (max(population(:)) - min(population(:))) - 1;
 data = load('bestGait.mat', 'gait');
 gait = data.gait;
-epochs = 1000;       
-lr = 0.001;         
+epochs = 5000;       
+lr = 0.01;         
 
 % ================== Training ==================
 for e = 1:epochs
@@ -62,4 +62,5 @@ for i = 1:(size(gait,1)-1)
 end
 
 % Visualize the NN-generated gait
-spider_gait(NN_results);
+% spider_gait(NN_results);
+save_spider_gait_video(NN_results, 'best_spider_gait_NN.mp4', 30);

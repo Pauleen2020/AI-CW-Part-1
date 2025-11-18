@@ -44,8 +44,8 @@ classdef Full_NN
         end
 
         function y = leaky_relu_Der(~, x)
-            y = ones(size(x))
-            y(x<0) = 0.01
+            y = ones(size(x));
+            y(x<0) = 0.01;
         end
 
         function err = msqe(~, t, output)
