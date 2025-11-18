@@ -3,15 +3,18 @@ minAngle = -pi/4;
 maxAngle = pi/4;
 nn = Full_NN(24, [48, 48], 24);
 % temporary gait
-gait = minAngle + (maxAngle - minAngle) * rand(numOfIndividuals, 24);
+%population = minAngle + (maxAngle - minAngle) * rand(numOfIndividuals, 24);
+%gait = 2 * (population- min(population(:))) / (max(population(:)) - min(population(:))) - 1;
+data = load('bestGait.mat', 'gait');
+gait = data.gait;
 epochs = 1000;       
-lr = 0.01;         
+lr = 0.001;         
 
 % ================== Training ==================
 for e = 1:epochs
     S_errors = 0;
-    
-    for i = 1:(size(gait,1)-1)
+    idx = randperm(size(gait,1)-1);
+    for i = idx
         input  = gait(i, :);
         target = gait(i+1, :);
 
@@ -34,20 +37,24 @@ end
 
 % ================== Testing ==================
 k = 1;
-input  = gait(k, :);
-target = gait(k+1, :);
+if k < size(gait,1)
+    input  = gait(k, :);
+    target = gait(k+1, :);
 
-[nn, NN_output] = nn.FF(input);
+    [nn, NN_output] = nn.FF(input);
 
-fprintf('\n=============== Testing the Network ===============\n');
-fprintf('Test input row %d\n', k);
-fprintf('Target output row %d\n', k+1);
-fprintf('Neural Network output (first 5 values):\n');
-disp(NN_output(1:5));
-fprintf('Error (first 5 values):\n');
-result = target - NN_output;
-disp(result(1:5));
-fprintf('===================================================\n');
+    fprintf('\n=============== Testing the Network ===============\n');
+    fprintf('Test input row %d\n', k);
+    fprintf('Target output row %d\n', k+1);
+    fprintf('Neural Network output (first 5 values):\n');
+    disp(NN_output(1:5));
+    fprintf('Error (first 5 values):\n');
+    result = target - NN_output;
+    disp(result(1:5));
+    fprintf('===================================================\n');
+else
+    disp('Reached the last frame, no target available.');
+end
 % Generate NN outputs for the whole gait sequence
 NN_results = zeros(size(gait));
 for i = 1:(size(gait,1)-1)
