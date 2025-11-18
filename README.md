@@ -15,3 +15,32 @@ We initialy set it to 9degrees but we theoretically thogh this was too high so w
 Feet closer to ground get less deductions of fitness
 
 The delta between angles must not be too much so we made a fitness function that evaluates this
+
+
+Design of GA
+
+Initially we generate a number of chromosomes, which the genes represent a weight.
+
+We loop through these chromosomes and put these through a generate_gait function which we get multiple gaits
+
+these gaits go through a fitness function, of which these will go through a select_parents function
+
+all of these below will change and manipulte the weights/genes,NOT the gaits
+
+-- explain selet parents here
+
+--explain breed function here
+
+--explain muttae function here
+
+
+problems faced/theorised, if the weights are 0 what wil happen.
+we may need to pass in 1 frame of the gait for the generate_gate function to work
+
+-- NN --
+We have chosen to represent the input and output layer to be 24x1. so one set of 24 inputs is one spider frame.
+the NN will predict the next frame. We can iterate this to get our 300 frames in a gait.
+The other way that could learn and solve the spider problem is by taking every possible value in the gait 300x24, and the NN could learn based on the context of the whole gait. But we realised this would not be feasible due to the hardware requirements necessary, as this would require 7200 inputs and outputs. 
+This approach may also be more RAM intensive due to the quantity of numbers being processed at one time.
+
+To train the NN, we take an 'ideal' gait, and take the first frame, pass this into the NN, then train based on the differences to the output and the input + 1, we then take the second frame (2:24) and train based on differences between the output and input(3:24)
