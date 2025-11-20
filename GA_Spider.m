@@ -27,7 +27,7 @@ function init_ga_spider()
 
         fitness_values = evaluate_fitness(gaits);
 
-        parents = get_parents(population, fitness_values, NUM_OF_SURVIVORS, TOP_SURVIVORS, RANDOM_SPIDERS, INPUT_SIZE, OUTPUT_SIZE);
+        parents = get_parents(population, fitness_values, NUM_OF_SURVIVORS, TOP_SURVIVORS, RANDOM_SPIDERS, SPIDER_INPUT_SIZE, SPIDER_OUTPUT_SIZE);
 
         population = generate_offspring(parents, POPULATION_SIZE, MUTATION_RATE, MAX_MUTATION_ANGLE);
     end

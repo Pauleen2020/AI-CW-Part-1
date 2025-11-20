@@ -1,4 +1,4 @@
-function get_coxa_range()
+function MAX_ANGLES = get_coxa_range()
     
     angles = zeros(1, 24);
 

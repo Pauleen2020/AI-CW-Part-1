@@ -1,11 +1,11 @@
 function parents = get_parents(population, fitness_values, NUM_OF_SURVIVORS, TOP_SURVIVORS, RANDOM_SPIDERS, INPUT_SIZE, OUTPUT_SIZE)
     ordered_indices = sort_fitness_indices(fitness_values);
 
-    parents = zeros(1, NUM_OF_SURVIVORS);
+    parents = {};
 
     % Best performers
     for i=1:TOP_SURVIVORS
-        parents(i) = population(ordered_indices(i));
+        parents{end+1} = population(ordered_indices(i));
     end
 
     % Random spiders
