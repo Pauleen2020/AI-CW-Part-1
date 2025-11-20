@@ -4,16 +4,14 @@ function parents = get_parents(population, fitness_values, NUM_OF_SURVIVORS, TOP
     parents = {};
 
     % Best performers
-    for i=1:TOP_SURVIVORS
-        parents{end+1} = population(ordered_indices(i));
+    for i = 1:TOP_SURVIVORS
+        parents{end+1} = population{ordered_indices(i)};   % FIXED
     end
 
     % Random spiders
     random_spiders = generate_population(RANDOM_SPIDERS, INPUT_SIZE, OUTPUT_SIZE);
     parents = [parents, random_spiders];
-
 end
-
 
 function ordered_indices = sort_fitness_indices(fitness_values)
     [~, ordered_indices] = sort(fitness_values, 'descend');

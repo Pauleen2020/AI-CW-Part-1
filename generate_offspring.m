@@ -1,7 +1,7 @@
 function population = generate_offspring(parents, POPULATION_SIZE, MUTATION_RATE, MAX_MUTATION_ANGLE)
     offspring = {};
 
-    offspring{end+1} = parents(1);
+    offspring{end+1} = parents{1};
 
     while length(offspring) < POPULATION_SIZE
         breeding_parents = choose_parents(parents);
@@ -33,13 +33,11 @@ function child = crossover(breeding_parents)
 end
 
 function mutated_child = mutate_child(child, MUTATION_RATE, MAX_MUTATION_ANGLE)
-    disp(class(child));
-    mutated_child = child{1};
-
-    
+    disp("mutate_child input class: " + class(child));
+    mutated_child = child;
 
     if rand() < MUTATION_RATE
-        disp(class(mutated_child));
+        disp("mutated_child element class: " + class(mutated_child(1)));
         mutation_index = randi(length(child));
         mutation_value = (rand() * 2 - 1) * MAX_MUTATION_ANGLE;
         mutated_child(mutation_index) = mutated_child(mutation_index) + mutation_value;

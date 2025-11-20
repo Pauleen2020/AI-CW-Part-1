@@ -53,7 +53,4 @@ function init_ga_spider()
 end
 
 
-load('bestGait.mat', 'population')
-
-
 
