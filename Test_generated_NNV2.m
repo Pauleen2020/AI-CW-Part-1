@@ -1,8 +1,8 @@
 % ---------- Minimal gait predictor and rollout ----------
 % Settings
 epochs      = 5000;          % training epochs
-lr          = 0.01;          % learning rate
-rolloutSteps = 400;          % number of frames to generate in rollout
+lr          = 0.001;          % learning rate
+rolloutSteps = 300;          % number of frames to generate in rollout
 seedIndex   = 1;             % which real frame to start the rollout from
 videoFile   = 'gait_rollout.mp4';
 videoFPS    = 30;

@@ -48,8 +48,11 @@ This approach may also be more RAM intensive due to the quantity of numbers bein
 
 To train the NN, we take an 'ideal' gait, and take the first frame, pass this into the NN, then train based on the differences to the output and the input + 1, we then take the second frame (2:24) and train based on differences between the output and input(3:24)
 
-
-
+For the activation function chosen, we experimented with all four but settled with leaky RELU via trial and error. 
+Sigmoid was tried first, but the NN would quickly stop adjustintg and would collapse to a constant output for all 300 frames.
+Tanh was a slight improvement, but like sigmoid it still saturates, in this case it would flip between +- 1. For sequential mapping, we require smooth transitions while the NN would learn trivial attractors too easily.
+Plain Relu would also repeat a constant output like Sigmoid. This is because any negative input would be killed by RELU due to any negative input outputting 0. This killed most frames, forcing a constant output.
+Leaky RELU works best as it outputs a small negative value for negative inputs, unlike Plain RELU which outputs 0. Neurons don't instantly die if there is a negative output so this allowed the NN to actually get a solution that was not alternating or constant.
 
 
 
