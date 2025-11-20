@@ -5,6 +5,7 @@ classdef Full_NN
         Y      % Number of output neurons
         L      % Full architecture
         W      % Weights
+        B      % Biases
         Der    % Derivatives
         out    % Outputs per layer
     end
@@ -30,14 +31,21 @@ classdef Full_NN
             for i = 1:length(obj.L)
                 obj.out{i} = zeros(1, obj.L(i));
             end
+            
+            for i = 1:length(obj.L) - 1
+                obj.W{i} = rand(obj.L(i), obj.L(i+1)) * 0.01;
+                b = zeros(1, obj.L(i+1));
+                obj.B{i} = b
+            end
         end
 
-        function y = sigmoid(~, x)
-            y = 1 ./ (1 + exp(-x));
+        function y = leakyrelu(~, x)
+            y = max(0.01*x,x);
         end
 
-        function y = sigmoid_Der(~, x)
-            y = x .* (1 - x);
+        function y = leaky_relu_Der(~, x)
+            y = ones(size(x));
+            y(x<0) = 0.01;
         end
 
         function err = msqe(~, t, output)
@@ -49,7 +57,7 @@ classdef Full_NN
             out = x;
 
             for i = 1:length(obj.W)
-                out = obj.sigmoid(out * obj.W{i});
+                out = obj.leakyrelu(out * obj.W{i});
                 obj.out{i+1} = out;
             end
         end
@@ -57,12 +65,13 @@ classdef Full_NN
         function obj = BP(obj, Er)
             for i = length(obj.Der):-1:1
                 out = obj.out{i+1};                          % Output of current layer
-                D = Er .* obj.sigmoid_Der(out);              % Delta
+                D = Er .* obj.leaky_relu_Der(out);              % Delta
                 D_fixed = reshape(D, 1, []);                  % Ensure row vector
         
                 this_out = reshape(obj.out{i}, [], 1);        % Ensure column vector
                 obj.Der{i} = this_out * D_fixed;              % Outer product
         
+                obj.B{i} = obj.B{i} + D_fixed;
                 Er = D * obj.W{i}';                           % Propagate error
             end
         end
