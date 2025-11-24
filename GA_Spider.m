@@ -1,10 +1,10 @@
 function init_ga_spider()
 
 %-------------Variables-------------%
-    POPULATION_SIZE= 100;
+    POPULATION_SIZE= 50;
     SPIDER_INPUT_SIZE = 24;
     SPIDER_OUTPUT_SIZE = 24;
-    GENERATIONS = 100;
+    GENERATIONS = 5;
 
     NUM_OF_SURVIVORS = 20;
     TOP_SURVIVORS = 16;
@@ -14,7 +14,7 @@ function init_ga_spider()
     MAX_MUTATION_ANGLE = 1;
 
 
-    TRAINING_FRAMES = 100;
+    TRAINING_FRAMES = 300;
     GAIT_FRAMES = 300;
 
 
@@ -56,13 +56,13 @@ function init_ga_spider()
 
     % Loop though all the vectors in the final gait and save to a file for faster
     % playback (30fps)
-    save_spider_gait_video(best_gait, 'best_spider_gait.mp4', 30);
+    save_spider_gait_video(best_gait, 'best_spider_gait.mp4', 10);
     
     % can choose whether to render live and see it instead of saving the video
     % (unsupported in browser)
     %spider_gait(best_gait)
 
-    save('bestGait.mat', 'population')
+    save('bestGait.mat', 'best_gait')
 end
 
 

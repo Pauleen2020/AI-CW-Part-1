@@ -40,6 +40,30 @@ the mutate function will pick a random gene and change it within a threshold of 
 problems faced/theorised, if the weights are 0 what wil happen.
 we may need to pass in 1 frame of the gait for the generate_gate function to work
 
+We found our approach to the generate_gaits function was flawed because it did not provide any hard constraints at all, meaning exponentially high or low outputs occured.
+
+We scaled each angle by an effective gain, which if it as > 1 then it would lead to exponential growth, <1 would lead to decay to 0
+
+No coupling between joints, no bias term
+
+unaware of max_angle_delta, max_angles, floor and other persistent qualities.
+
+Select Parents were selecting random individuals that were completely randomly generated, of which these could massivly overshoot the rules set in the fitness function and overwhelm the existing best individuals
+
+we also found we should provide rewards not only penalties, we found a local minimum which was for the spider not to move any of its legs as that gave the least penalty. 
+
+Fixes:
+
+Pasing 1 frame of the gait into the generate_gate function to work
+
+Parent Selection: 
+random survivors are selected from existing population pool
+
+Offspring/mutation
+per child, at most one gene changed, many small changes across the chromosome, bound by max mutation angle.
+
+Motion based reward, joint movement gate and anti freeze penalties, softer constraint penalties were implemented to maintain balenced and consistent movement throughout the gait.
+
 -- NN --
 We have chosen to represent the input and output layer to be 24x1. so one set of 24 inputs is one spider frame.
 the NN will predict the next frame. We can iterate this to get our 300 frames in a gait.

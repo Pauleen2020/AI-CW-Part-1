@@ -1,6 +1,7 @@
 function population = generate_offspring(parents, POPULATION_SIZE, MUTATION_RATE, MAX_MUTATION_ANGLE)
     offspring = {};
 
+    % Elitism: always keep the best parent unchanged
     offspring{end+1} = parents{1};
 
     while length(offspring) < POPULATION_SIZE
@@ -33,11 +34,14 @@ function child = crossover(breeding_parents)
 end
 
 function mutated_child = mutate_child(child, MUTATION_RATE, MAX_MUTATION_ANGLE)
+    % Apply mutation independently per gene with probability MUTATION_RATE,
+    % ensuring perturbations remain bounded by MAX_MUTATION_ANGLE.
     mutated_child = child;
 
-    if rand() < MUTATION_RATE
-        mutation_index = randi(length(child));
-        mutation_value = (rand() * 2 - 1) * MAX_MUTATION_ANGLE;
-        mutated_child(mutation_index) = mutated_child(mutation_index) + mutation_value;
+    for i = 1:length(mutated_child)
+        if rand() < MUTATION_RATE
+            mutation_value = (rand() * 2 - 1) * MAX_MUTATION_ANGLE;
+            mutated_child(i) = mutated_child(i) + mutation_value;
+        end
     end
 end
