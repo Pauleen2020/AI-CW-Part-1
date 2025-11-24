@@ -33,11 +33,9 @@ function child = crossover(breeding_parents)
 end
 
 function mutated_child = mutate_child(child, MUTATION_RATE, MAX_MUTATION_ANGLE)
-    disp("mutate_child input class: " + class(child));
     mutated_child = child;
 
     if rand() < MUTATION_RATE
-        disp("mutated_child element class: " + class(mutated_child(1)));
         mutation_index = randi(length(child));
         mutation_value = (rand() * 2 - 1) * MAX_MUTATION_ANGLE;
         mutated_child(mutation_index) = mutated_child(mutation_index) + mutation_value;

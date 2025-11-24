@@ -11,6 +11,7 @@ function save_spider_gait_video(gait, filename, frameRate)
 
     for frame = 1:numFrames
         angles = gait(frame, :);
+        %disp(angles);
         plot_spider_pose(angles);  % Your existing plot function
         title(sprintf('Spider Gait - Frame %d of %d', frame, numFrames));
         drawnow;

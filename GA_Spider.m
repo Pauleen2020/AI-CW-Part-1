@@ -23,6 +23,7 @@ function init_ga_spider()
 
 
     for i=1:GENERATIONS
+        disp("Generation: " + i);
         gaits = generate_gaits(population, TRAINING_FRAMES);
 
         fitness_values = evaluate_fitness(gaits);
@@ -36,8 +37,20 @@ function init_ga_spider()
 
     final_fitness_values = evaluate_fitness(final_gaits);
 
-    best_gait = get_best_gait(final_gaits, final_fitness_values);
+    best_gait = cell2mat(get_best_gait(final_gaits, final_fitness_values)');
 
+    best_spider = get_best_spider(population, final_fitness_values);
+
+    %Dipl frames
+
+    
+
+    for frame = 1:GAIT_FRAMES
+        angles = best_gait(frame, :);
+        disp(angles);
+    end
+
+    %disp(best_spider);
     
     %-------------Create .mp4 file for fast playback-------------%
 
@@ -47,7 +60,7 @@ function init_ga_spider()
     
     % can choose whether to render live and see it instead of saving the video
     % (unsupported in browser)
-    spider_gait(best_gait)
+    %spider_gait(best_gait)
 
     save('bestGait.mat', 'population')
 end
