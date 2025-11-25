@@ -83,4 +83,4 @@ end
 
 % Visualize the NN-generated gait
 % spider_gait(NN_results);
-save_spider_gait_video(NN_results, 'best_spider_gait_NN.mp4', 30);
+save_spider_gait_video(NN_results, 'best_spider_gait_NN.mp4', 10);
