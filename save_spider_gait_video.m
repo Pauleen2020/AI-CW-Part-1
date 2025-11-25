@@ -28,7 +28,7 @@ function save_spider_gait_video(gait, filename, frameRate, graph_handle)
     end
 
     close(v);  % Finalize video file
-    fprintf('✅ Video saved to %s\n', filename);
+    fprintf('Video saved to %s\n', filename);
 end
 
 
