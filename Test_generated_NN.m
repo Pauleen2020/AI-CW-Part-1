@@ -5,7 +5,15 @@ nn = Full_NN(24, [48, 48], 24);
 % temporary gait
 %population = minAngle + (maxAngle - minAngle) * rand(numOfIndividuals, 24);
 %gait = 2 * (population- min(population(:))) / (max(population(:)) - min(population(:))) - 1;
-gait = load('bestGait.mat');
+
+% Load best gait matrix (N x 24) from .mat file
+loaded = load('bestGait.mat');
+if isfield(loaded, 'best_gait')
+    gait = loaded.best_gait;   % use GA output directly
+else
+    error('bestGait.mat does not contain variable ''best_gait''.');
+end
+
 epochs = 5000;       
 lr = 0.01;         
 
@@ -54,9 +62,12 @@ if k < size(gait,1)
 else
     disp('Reached the last frame, no target available.');
 end
-% Generate NN outputs for the whole gait sequence
-NN_results = zeros(size(gait));
-for i = 1:(size(gait,1)-1)
+
+% Generate NN outputs for the whole gait sequence (N x 24)
+numFrames = size(gait,1);
+numJoints = size(gait,2);   % should be 24
+NN_results = zeros(numFrames, numJoints);
+for i = 1:(numFrames)
     [nn, NN_results(i,:)] = nn.FF(gait(i,:));
 end
 
