@@ -5,9 +5,10 @@ nn = Full_NN(24, [48, 48], 24);
 % temporary gait
 %population = minAngle + (maxAngle - minAngle) * rand(numOfIndividuals, 24);
 %gait = 2 * (population- min(population(:))) / (max(population(:)) - min(population(:))) - 1;
-load('bestGait.mat', 'gait');
+gait = load('bestGait.mat');
 epochs = 5000;       
-lr = 0.01;         
+lr = 0.01;
+errors = zeros(epochs,1);
 
 % ================== Training ==================
 for e = 1:epochs
@@ -28,12 +29,21 @@ for e = 1:epochs
 
         % Accumulate error
         S_errors = S_errors + nn.msqe(target, output);
-    end
-    
-    % Print average error per epoch
-    fprintf('Epoch %d/%d, Mean Squared Error: %.6f\n', e, epochs, S_errors / (size(gait,1)-1));
-end
 
+
+    end
+    % for graph
+    errors(e) = S_errors / (size(gait,1)-1);
+    % Print average error per epoch
+    fprintf('Epoch %d/%d, Mean Squared Error: %.6f\n', e, epochs, errors(e));
+end
+% ================= Plotting ==================
+figure;
+plot(1:epochs, errors, 'LineWidth', 2);
+xlabel('Epoch');
+ylabel('Mean Squared Error');
+title('NN Training Graph');
+grid on;
 % ================== Testing ==================
 k = 1;
 if k < size(gait,1)
