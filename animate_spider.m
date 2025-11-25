@@ -1,3 +1,5 @@
+% Unused function to animate a spider  by rotating each of its 24 joints sequentially.
+
 function animate_spider()
     angles = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 

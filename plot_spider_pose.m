@@ -25,7 +25,7 @@ function plot_spider_pose(angles)
     end
 
     % Setup figure
-    figure(1); clf;
+    figure(gcf); clf;
     set(gcf, 'Color', 'w');
     axis equal;
     grid on;

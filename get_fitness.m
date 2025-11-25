@@ -112,7 +112,7 @@ function fitness = get_fitness(angles, prev_angles)
         end
 
         % Main reward: how much the feet move along X in total
-        fitness = fitness + GA_PARAMS.FORWARD_MOVEMENT_SCALAR * total_foot_motion_x;
+        fitness = fitness + GA_PARAMS.MOVEMENT_SCALAR * total_foot_motion_x;
 
         % Extra: small bonus for using more legs in propulsion
         fitness = fitness + 0.5 * num_legs_moving_in_x;

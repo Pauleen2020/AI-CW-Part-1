@@ -14,8 +14,8 @@ else
     error('bestGait.mat does not contain variable ''best_gait''.');
 end
 
-epochs = 5000;       
-lr = 0.005;
+epochs = 200;       
+lr = 0.008;
 errors = zeros(epochs,1);
 
 % ================== Training ==================
@@ -46,7 +46,7 @@ for e = 1:epochs
     fprintf('Epoch %d/%d, Mean Squared Error: %.6f\n', e, epochs, errors(e));
 end
 % ================= Plotting Graph ==================
-figure;
+nn_graph_fig = figure;
 plot(1:epochs, errors, 'LineWidth', 2);
 xlabel('Epoch');
 ylabel('Mean Squared Error');
@@ -81,6 +81,10 @@ for i = 1:(numFrames)
     [nn, NN_results(i,:)] = nn.FF(gait(i,:));
 end
 
+% Create a new figure for the spider animation
+figure;
 % Visualize the NN-generated gait
 % spider_gait(NN_results);
-save_spider_gait_video(NN_results, 'best_spider_gait_NN.mp4', 10);
+save_spider_gait_video(NN_results, 'best_spider_gait_NN.mp4', 10, nn_graph_fig);% Save the trained neural network
+save('trained_nn.mat', 'nn');
+fprintf('Trained Neural Network saved to trained_nn.mat\n');

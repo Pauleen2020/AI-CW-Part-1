@@ -1,0 +1,17 @@
+1. Open GA_Spider.m file, click run at the top bar in matlab.
+
+This will run the generations then an output screen will show (this will render and save each frame to a file for quick viewing if the user wishes). 
+
+DO NOT RESIZE the window (will break due to the render size changing and we havn't handled it)
+
+THE WINDOW WILL KEEP FOCUSING YOUR COMPUTER TO IT (annoying i know)
+
+once 300/300 has been reached, close the window, and there will be a best_spider_gait.mp4 generated for user curiosity.
+
+2. open NN_Spider.m and click the run button at the top of matlab.
+
+ditto
+
+once the saving of video is complete, there will be a best_spider_gait_NN.mp4 for viewing.
+
+The graphs shown in the video are the actual graphs from the relevant functions that created that gait
