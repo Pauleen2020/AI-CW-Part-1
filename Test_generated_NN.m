@@ -37,7 +37,7 @@ for e = 1:epochs
     % Print average error per epoch
     fprintf('Epoch %d/%d, Mean Squared Error: %.6f\n', e, epochs, errors(e));
 end
-% ================= Plotting ==================
+% ================= Plotting Graph ==================
 figure;
 plot(1:epochs, errors, 'LineWidth', 2);
 xlabel('Epoch');
