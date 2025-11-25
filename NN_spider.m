@@ -15,7 +15,7 @@ else
 end
 
 epochs = 5000;       
-lr = 0.01;
+lr = 0.005;
 errors = zeros(epochs,1);
 
 % ================== Training ==================
