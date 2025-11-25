@@ -47,6 +47,9 @@ the mutate function will pick a random gene and change it within a threshold of 
 
 --understanding tradoffs/thoery
 
+--explain save_spider_gait_video and spider_gate.m
+--linux compatability with mpeg4
+
 
 problems faced/theorised, if the weights are 0 what wil happen.
 we may need to pass in 1 frame of the gait for the generate_gate function to work
@@ -82,10 +85,11 @@ Motion based reward, joint movement gate and anti freeze penalties, softer const
 
 
 -- NN --
-We have chosen to represent the input and output layer to be 24x1. so one set of 24 inputs is one spider frame.
-the NN will predict the next frame. We can iterate this to get our 300 frames in a gait.
+We have chosen to represent the input and output layer to be 24x1. so one set of 24 inputs is one spider frame. 
+the NN will predict the next frame. We can iterate this to get our 300 frames in a gait, therefore our gradient descent method will be stochastic. 
 The other way that could learn and solve the spider problem is by taking every possible value in the gait 300x24, and the NN could learn based on the context of the whole gait. But we realised this would not be feasible due to the hardware requirements necessary, as this would require 7200 inputs and outputs. 
 This approach may also be more RAM intensive due to the quantity of numbers being processed at one time.
+Because of this, we have selected for 24 frames to be the input and 24 frames to be the output, as the NN is directly predicting a frame of the gait. 48 hidden layers are used to prevent overfitting while having enough space to capture any unlinear dependencies.
 
 To train the NN, we take an 'ideal' gait, and take the first frame, pass this into the NN, then train based on the differences to the output and the input + 1, we then take the second frame (2:24) and train based on differences between the output and input(3:24)
 
@@ -96,16 +100,22 @@ Plain Relu would also repeat a constant output like Sigmoid. This is because any
 Leaky RELU works best as it outputs a small negative value for negative inputs, unlike Plain RELU which outputs 0. Neurons don't instantly die if there is a negative output so this allowed the NN to actually get a solution that was not alternating or constant.
 
 --explain the loss function
-
---clear justification of choices
+The loss function being used here is MSE (Mean Squared Error) which measures the average square difference between the predicted and the actual frame within the gait. 
+MSE ensures that large deviations from the actual frame are punished more, which allows the MSE to get smaller overtime which reflects how close the NN is to being accurate to the actual gait given.
 
 --training method and learning rate (batch size, optimizer)
-
+Batch size is set to one as we are processing each frame individually. 
+Optimizer:
+For each epoch (epoch count can be varied) the MSE is outputted for error handling on convergence.
 --explain BP being used/explain the process
+The back propagation process starts by calculating the error vector, which is the difference between the target and the output. Vector subtraction like this is able to be done on MATLAB.
 
 --how we handle the data input and output (how we get it from the GA)
-
+We use the bestGait.mat file as the input gait. This file is updated whenever the GA is ran with the best gait that it generates being used, allowing us to directly inject it in when running the NN.
+The NN then takes one dimension of the gait (or frame) for training. Training is done with pairs (The frame being inputted and the target frame which is the next frame.)
+The output of the NN uses the spider_gait file and save_spider_gait_video files from the GA part of the project to output all 300 frames of the final gait and then save it as a video file for playback.
 --show a graph showing the performance of the NN
+
 
 
 
