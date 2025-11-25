@@ -17,9 +17,9 @@ Feet closer to ground get less deductions of fitness
 The delta between angles must not be too much so we made a fitness function that evaluates this
 
 
-Design of GA
+Initial Design of GA
 
-Initially we generate a number of chromosomes, which the genes represent a weight.
+We generate a number of chromosomes, which the genes represent a weight.
 
 We loop through these chromosomes and put these through a generate_gait function which we get multiple gaits
 
@@ -27,14 +27,25 @@ these gaits go through a fitness function, of which these will go through a sele
 
 all of these below will change and manipulte the weights/genes,NOT the gaits
 
+
+--expalin the fitness function
+
 -- explain selet parents here
 we will take the top 16 and generate 4 completely random spiders to make up 20 spiders
+--justify the zselection method (is it tourn or routlette wheel)
 
 --explain breed function here
 we then will breed these 20 to make 100 spiders, breeding will consist of the crossover function among the top 6 parents + two random parents of from the 20 parents.
+--go into detail of is it a 1point crossover or n point crossover etc
 
 --explain muttae function here
 the mutate function will pick a random gene and change it within a threshold of 5%, a variable is set to dicate the chances that a mutaion happens
+
+--explain how we generate the gait, turning the 24x24 weights into 300x24
+
+--implement a graph showing fitness progression among the generations
+
+--understanding tradoffs/thoery
 
 
 problems faced/theorised, if the weights are 0 what wil happen.
@@ -52,6 +63,8 @@ Select Parents were selecting random individuals that were completely randomly g
 
 we also found we should provide rewards not only penalties, we found a local minimum which was for the spider not to move any of its legs as that gave the least penalty. 
 
+
+
 Fixes:
 
 Pasing 1 frame of the gait into the generate_gate function to work
@@ -63,6 +76,10 @@ Offspring/mutation
 per child, at most one gene changed, many small changes across the chromosome, bound by max mutation angle.
 
 Motion based reward, joint movement gate and anti freeze penalties, softer constraint penalties were implemented to maintain balenced and consistent movement throughout the gait.
+
+
+
+
 
 -- NN --
 We have chosen to represent the input and output layer to be 24x1. so one set of 24 inputs is one spider frame.
@@ -77,6 +94,20 @@ Sigmoid was tried first, but the NN would quickly stop adjustintg and would coll
 Tanh was a slight improvement, but like sigmoid it still saturates, in this case it would flip between +- 1. For sequential mapping, we require smooth transitions while the NN would learn trivial attractors too easily.
 Plain Relu would also repeat a constant output like Sigmoid. This is because any negative input would be killed by RELU due to any negative input outputting 0. This killed most frames, forcing a constant output.
 Leaky RELU works best as it outputs a small negative value for negative inputs, unlike Plain RELU which outputs 0. Neurons don't instantly die if there is a negative output so this allowed the NN to actually get a solution that was not alternating or constant.
+
+--explain the loss function
+
+--clear justification of choices
+
+--training method and learning rate (batch size, optimizer)
+
+--explain BP being used/explain the process
+
+--how we handle the data input and output (how we get it from the GA)
+
+--show a graph showing the performance of the NN
+
+
 
 
 
