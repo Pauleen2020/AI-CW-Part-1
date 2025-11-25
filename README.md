@@ -108,7 +108,7 @@ Batch size is set to one as we are processing each frame individually.
 Optimizer:
 For each epoch (epoch count can be varied) the MSE is outputted for error handling on convergence.
 --explain BP being used/explain the process
-The back propagation process starts by calculating the error vector, which is the difference between the target and the output. Vector subtraction like this is able to be done on MATLAB.
+The back propagation process starts by calculating the error vector, which is the difference between the target and the output. Vector subtraction like this is able to be done on MATLAB due to it doing element-wise arithmetic.
 
 --how we handle the data input and output (how we get it from the GA)
 We use the bestGait.mat file as the input gait. This file is updated whenever the GA is ran with the best gait that it generates being used, allowing us to directly inject it in when running the NN.
