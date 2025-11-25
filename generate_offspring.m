@@ -1,6 +1,10 @@
-function population = generate_offspring(parents, POPULATION_SIZE, MUTATION_RATE, MAX_MUTATION_ANGLE)
-    offspring = {};
+function population = generate_offspring(parents)
+    global GA_PARAMS;
+    MUTATION_RATE = GA_PARAMS.MUTATION_RATE;
+    MAX_MUTATION_ANGLE = GA_PARAMS.MAX_MUTATION_ANGLE;
+    POPULATION_SIZE = GA_PARAMS.POPULATION_SIZE;
 
+    offspring = {};
     % Elitism: always keep the best parent unchanged
     offspring{end+1} = parents{1};
 
@@ -15,29 +19,20 @@ function population = generate_offspring(parents, POPULATION_SIZE, MUTATION_RATE
 end
 
 function breeding_parents = choose_parents(parents)
-    breeding_parents = {
-        parents{randi(length(parents))}, parents{randi(length(parents))}
-    };
+    breeding_parents = { parents{randi(length(parents))}, parents{randi(length(parents))} };
 end
 
 function child = crossover(breeding_parents)
     child = zeros(1, length(breeding_parents{1}));
-
     parent1i = randi(2);
-
     parent1 = breeding_parents{parent1i};
     parent2 = breeding_parents{3 - parent1i};
-
     crossover_point = floor(length(parent1) / 2);
-
     child = [parent1(1:crossover_point), parent2(crossover_point+1:end)];
 end
 
 function mutated_child = mutate_child(child, MUTATION_RATE, MAX_MUTATION_ANGLE)
-    % Apply mutation independently per gene with probability MUTATION_RATE,
-    % ensuring perturbations remain bounded by MAX_MUTATION_ANGLE.
     mutated_child = child;
-
     for i = 1:length(mutated_child)
         if rand() < MUTATION_RATE
             mutation_value = (rand() * 2 - 1) * MAX_MUTATION_ANGLE;

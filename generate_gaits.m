@@ -20,6 +20,7 @@ function gait = generate_gait(chromsome, NUM_OF_FRAMES)
 end
 
 function frame = generate_frame(chromosome, previous_frame)
+    global GA_PARAMS;
     % Generate a new frame from the previous one using the chromosome as a
     % simple linear controller, but enforce hard constraints:
     % - maximum per-step angle change
@@ -30,11 +31,11 @@ function frame = generate_frame(chromosome, previous_frame)
 
     % Controller: for each joint we predict a desired delta from a slice of
     % the chromosome, then clamp that delta and the resulting angle.
-    MAX_ANGLE_DELTA = 2;   % matches get_fitness
+    MAX_ANGLE_DELTA = GA_PARAMS.MAX_ANGLE_DELTA;
 
     % Reasonable global bounds for all joints (in radians)
-    MIN_ANGLE = -pi/2;     % -90 deg
-    MAX_ANGLE =  pi/2;     %  90 deg
+    MIN_ANGLE = GA_PARAMS.MIN_ANGLE;
+    MAX_ANGLE = GA_PARAMS.MAX_ANGLE;
 
     % Each joint uses a contiguous block of weights
     weights_per_joint = floor(length(chromosome) / n_joints);
