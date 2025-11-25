@@ -5,8 +5,7 @@ nn = Full_NN(24, [48, 48], 24);
 % temporary gait
 %population = minAngle + (maxAngle - minAngle) * rand(numOfIndividuals, 24);
 %gait = 2 * (population- min(population(:))) / (max(population(:)) - min(population(:))) - 1;
-data = load('bestGait.mat', 'gait');
-gait = data.gait;
+load('bestGait.mat', 'gait');
 epochs = 5000;       
 lr = 0.01;         
 

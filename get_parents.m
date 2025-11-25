@@ -13,7 +13,9 @@ function parents = get_parents(population, fitness_values, NUM_OF_SURVIVORS, TOP
     remaining_indices = ordered_indices(TOP_SURVIVORS+1:end);
     if ~isempty(remaining_indices)
         n_random = min(RANDOM_SPIDERS, numel(remaining_indices));
-        rand_sel = randsample(remaining_indices, n_random);
+        % Replace randsample (Statistics Toolbox) with base MATLAB randperm
+        perm = randperm(numel(remaining_indices), n_random);
+        rand_sel = remaining_indices(perm);
         for k = 1:numel(rand_sel)
             parents{end+1} = population{rand_sel(k)};
         end

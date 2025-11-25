@@ -1,17 +1,14 @@
 function population = generate_offspring(parents)
     global GA_PARAMS;
-    MUTATION_RATE = GA_PARAMS.MUTATION_RATE;
-    MAX_MUTATION_ANGLE = GA_PARAMS.MAX_MUTATION_ANGLE;
-    POPULATION_SIZE = GA_PARAMS.POPULATION_SIZE;
 
     offspring = {};
     % Elitism: always keep the best parent unchanged
     offspring{end+1} = parents{1};
 
-    while length(offspring) < POPULATION_SIZE
+    while length(offspring) < GA_PARAMS.POPULATION_SIZE
         breeding_parents = choose_parents(parents);
         child = crossover(breeding_parents);
-        mutated_child = mutate_child(child, MUTATION_RATE, MAX_MUTATION_ANGLE);
+        mutated_child = mutate_child(child, GA_PARAMS.MUTATION_RATE, GA_PARAMS.MAX_MUTATION_ANGLE);
         offspring{end+1} = mutated_child;
     end
 
@@ -32,11 +29,14 @@ function child = crossover(breeding_parents)
 end
 
 function mutated_child = mutate_child(child, MUTATION_RATE, MAX_MUTATION_ANGLE)
+    global GA_PARAMS;
     mutated_child = child;
     for i = 1:length(mutated_child)
         if rand() < MUTATION_RATE
             mutation_value = (rand() * 2 - 1) * MAX_MUTATION_ANGLE;
             mutated_child(i) = mutated_child(i) + mutation_value;
         end
+        % Clamp after mutation
+        mutated_child(i) = max(GA_PARAMS.MIN_ANGLE, min(GA_PARAMS.MAX_ANGLE, mutated_child(i)));
     end
 end

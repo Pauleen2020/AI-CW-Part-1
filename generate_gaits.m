@@ -29,14 +29,6 @@ function frame = generate_frame(chromosome, previous_frame)
     n_joints = length(previous_frame);
     frame = zeros(1, n_joints);
 
-    % Controller: for each joint we predict a desired delta from a slice of
-    % the chromosome, then clamp that delta and the resulting angle.
-    MAX_ANGLE_DELTA = GA_PARAMS.MAX_ANGLE_DELTA;
-
-    % Reasonable global bounds for all joints (in radians)
-    MIN_ANGLE = GA_PARAMS.MIN_ANGLE;
-    MAX_ANGLE = GA_PARAMS.MAX_ANGLE;
-
     % Each joint uses a contiguous block of weights
     weights_per_joint = floor(length(chromosome) / n_joints);
     if weights_per_joint < 1
@@ -64,15 +56,21 @@ function frame = generate_frame(chromosome, previous_frame)
             w = w(1:numel(x));
         end
 
-        desired_delta = dot(w, x);
+        raw_delta = dot(w, x);
 
-        % Clamp delta to match "rule" from get_fitness
-        desired_delta = max(-MAX_ANGLE_DELTA, min(MAX_ANGLE_DELTA, desired_delta));
+        % Smooth saturation using tanh to avoid hard pushing into bounds
+        desired_delta = GA_PARAMS.MAX_ANGLE_DELTA * tanh(raw_delta / max(1e-6, GA_PARAMS.MAX_ANGLE_DELTA));
+
+        % Add exploratory jitter if near boundary to help escape local minima
+        if previous_frame(i) > GA_PARAMS.MAX_ANGLE - GA_PARAMS.BOUNDARY_MARGIN || ...
+           previous_frame(i) < GA_PARAMS.MIN_ANGLE + GA_PARAMS.BOUNDARY_MARGIN
+            desired_delta = desired_delta + (2*rand - 1) * (0.5 * GA_PARAMS.BOUNDARY_MARGIN);
+        end
 
         new_angle = previous_frame(i) + desired_delta;
 
         % Clamp joint angle to a global range
-        new_angle = max(MIN_ANGLE, min(MAX_ANGLE, new_angle));
+        new_angle = max(GA_PARAMS.MIN_ANGLE, min(GA_PARAMS.MAX_ANGLE, new_angle));
 
         frame(i) = new_angle;
     end
