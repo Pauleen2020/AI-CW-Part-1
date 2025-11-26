@@ -14,7 +14,7 @@ else
     error('bestGait.mat does not contain variable ''best_gait''.');
 end
 
-epochs = 500;       
+epochs = 2000;       
 lr = 0.001;
 errors = zeros(epochs,1);
 
